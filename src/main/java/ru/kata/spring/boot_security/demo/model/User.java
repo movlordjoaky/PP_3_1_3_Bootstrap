@@ -1,7 +1,5 @@
 package ru.kata.spring.boot_security.demo.model;
 
-//import jakarta.persistence.*;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -15,11 +13,11 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String name;
+    private String firstName;
+    private String lastName;
     private int age;
-    private double skill;
     @Column(unique = true)
-    private String username;
+    private String email;
     private String password;
 
     @ManyToMany
@@ -29,15 +27,14 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(int id, String name, int age, double skill) {
+    public User(int id, String name, int age) {
         this.id = id;
-        this.name = name;
+        this.firstName = name;
         this.age = age;
-        this.skill = skill;
     }
 
-    public User(String username, String password) {
-        this.username = username;
+    public User(String email, String password) {
+        this.email = email;
         this.password = password;
     }
 
@@ -49,12 +46,20 @@ public class User implements UserDetails {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String name) {
+        this.firstName = name;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public int getAge() {
@@ -65,20 +70,16 @@ public class User implements UserDetails {
         this.age = age;
     }
 
-    public double getSkill() {
-        return skill;
-    }
-
-    public void setSkill(double skill) {
-        this.skill = skill;
+    public List<Role> getRoles() {
+        return roles;
     }
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String username) {
+        this.email = username;
     }
 
     public void setPassword(String password) {
@@ -87,7 +88,7 @@ public class User implements UserDetails {
 
     @Override
     public String toString() {
-        return name + ", " + age + " лет. Мастерство: " + skill + ". Логин: " + username;
+        return firstName + " " + lastName + ", " + age + " лет." + ". Логин: " + email + " Пароль: " + password;
     }
 
     @Override
@@ -102,7 +103,11 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.username;
+        return getEmail();
+    }
+
+    public String getEmail() {
+        return this.email;
     }
 
     @Override

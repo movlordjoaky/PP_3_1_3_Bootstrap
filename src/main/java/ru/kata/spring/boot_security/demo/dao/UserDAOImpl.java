@@ -16,9 +16,9 @@ public class UserDAOImpl implements UserDAO {
     public UserDAOImpl() {
     }
 
-    public User findByUsername(String username) {
-        TypedQuery<User> query = entityManager.createQuery("SELECT user FROM User user WHERE user.username = :username", User.class);
-        query.setParameter("username", username);
+    public User findByUsername(String email) {
+        TypedQuery<User> query = entityManager.createQuery("SELECT user FROM User user WHERE user.email = :email", User.class);
+        query.setParameter("email", email);
         List<User> users = query.getResultList();
         if (users.isEmpty()) {
             return null;
@@ -46,9 +46,8 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public void changeUser(User newUser, int id) {
         User user = entityManager.find(User.class, id);
-        user.setName(newUser.getName());
+        user.setFirstName(newUser.getFirstName());
         user.setAge(newUser.getAge());
-        user.setSkill(newUser.getSkill());
         entityManager.merge(user);
     }
 

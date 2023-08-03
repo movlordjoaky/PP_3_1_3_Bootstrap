@@ -5,11 +5,11 @@
     <title>Страница User</title>
 </head>
 <body>
+<header th:replace="header :: header"></header>
 <div>
-    <h1><span th:text="${user.getName()}">Имя</span>, приветствуем вас!</h1>
+    <h1><span th:text="${user.getFirstName()}">Имя</span>, приветствуем вас!</h1>
     <div>Ваши данные:</div>
     <span th:text="${user}">Пользователь</span>
-    <div th:replace="logout :: logout"></div>
 </div>
 </body>
 </html>

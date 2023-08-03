@@ -1,11 +1,16 @@
 package ru.kata.spring.boot_security.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.services.UserService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -14,6 +19,14 @@ public class UserController {
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    @GetMapping("/login")
+    public String loginForm(Model model, String error) {
+        if (error != null) {
+            model.addAttribute("errorMessage", "Неверное имя пользователя или пароль");
+        }
+        return "index";
     }
 
     // вывод всех пользователей
@@ -32,7 +45,6 @@ public class UserController {
     // команда на форме добавления пользователя
     @PostMapping("/add")
     public String addUser(@ModelAttribute User user) {
-        System.out.println("1234" + user);
         userService.addUser(user);
         return "redirect:/admin";
     }

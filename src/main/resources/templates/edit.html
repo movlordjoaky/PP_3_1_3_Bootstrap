@@ -5,20 +5,17 @@
     <title>Изменить пользователя</title>
 </head>
 <body>
-<h3 th:text="'Изменение пользователя ' + ${user.name}"></h3>
+<header th:replace="header :: header"></header>
+<h3 th:text="'Изменение пользователя ' + ${user.firstName}"></h3>
 <div>
     <form th:method="PATCH" th:action="@{/edit/{id}(id=${user.getId()})}" th:object="${user}">
         <div>
             <label for="name">Имя (строка)</label>
-            <input type="text" id="name" th:field="*{name}" th:value="${user.getName()}" autofocus>
+            <input type="text" id="name" th:field="*{firstName}" th:value="${user.getFirstName()}" autofocus>
         </div>
         <div>
             <label for="age">Возраст (целое число)</label>
             <input name="age" type="text" id="age" th:value="${user.getAge()}">
-        </div>
-        <div>
-            <label for="skill">Мастерство (вещественное число)</label>
-            <input name="skill" type="text" id="skill" th:value="${user.getSkill()}">
         </div>
         <div>
             <label for="username">Логин</label>
@@ -30,7 +27,6 @@
         </div>
         <input type="submit" value="Сохранить">
     </form>
-    <div th:replace="logout :: logout"></div>
 </div>
 </body>
 </html>
